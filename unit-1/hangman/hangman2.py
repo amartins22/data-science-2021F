@@ -11,7 +11,9 @@ def check(word,letter,displayWord):
     isCorrectLetter = False
     for i in range(len(word)):
         x = word[i]
-        if x == letter :
+        if letter.isalpha() == False:
+            print("not a valid response")
+        elif x == letter :
             displayWord[i] = x
             isCorrectLetter = True     
     note(letter,isCorrectLetter)
@@ -37,21 +39,19 @@ The secret word has """ + str(wordLength) + """ letters and the theme is colors.
     print(displayWord)
 
 #tracking the letters that were guessed
-def letterTracker(letter, numGuesses):
-    lettersGuessed = []
-    for x in lettersGuessed:
-        if letter == x:
+def guessTracker(letter,numGuesses,alreadyGuessed):
+    if letter not in alreadyGuessed:
+        alreadyGuessed.append(letter)
+        print("So far you have guessed " + str(alreadyGuessed))
+    else:
             print("You have already guessed that letter")
             numGuesses = numGuesses + 1
-        else:
-            lettersGuessed.append(letter)
-            print("So far you have guessed " + str(lettersGuessed))
 
 def playGame():  
     #variables
     wordList = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "black", "brown", "gray", "white"] 
     word = random.choice(wordList)
-    #lettersGuessed = []
+    alreadyGuessed = []
     numGuesses = 8
     displayWord = ["*" for x in word]
     gameOver = False
@@ -63,10 +63,9 @@ def playGame():
             if numGuesses > 0 :    
                 numGuesses = numGuesses - 1
                 letter = guess()
-                #lettersGuessed.append(letter)
                 check(word,letter,displayWord)
                 print(displayWord)
-                letterTracker(letter, numGuesses)
+                guessTracker(letter, numGuesses, alreadyGuessed)
                 print("You have " + str(numGuesses) + " guesses left.")
             else :
                 gameOver = True
